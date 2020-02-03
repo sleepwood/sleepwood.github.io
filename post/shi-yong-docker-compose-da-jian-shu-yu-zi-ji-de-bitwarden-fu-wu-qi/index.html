@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>使用Docker Compose搭建属于自己的Bitwarden服务器 | Gridea</title>
+<meta name="description" content="技术小栈">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1580734189331">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="http://localhost:4000">Gridea</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="http://localhost:4000/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="http://localhost:4000/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="http://localhost:4000/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="http://localhost:4000/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>使用Docker Compose搭建属于自己的Bitwarden服务器</h1>
+            <p class="article-meta">
+              2020-02-03
+              
+                <a href="http://localhost:4000/tag/M_8rk3vEm" class="badge warning">
+                  bitwarden
+                </a>
+              
+                <a href="http://localhost:4000/tag/pBxy92f8_K" class="badge secondary">
+                  docker
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
+<!-- more -->
+<p>在终端中运行下面的命令安装 Docker。</p>
+<pre><code>curl -sSL https://get.daocloud.io/docker | sh 
+#启动docker
+sudo service docker start
+</code></pre>
+<p>Docker Compose 负责快速在集群中部署分布式应用，本文使用 docker-compose 来管理服务。在本文中我们将使用它来搭建Bitwarden_RS服务器，并使用Caddy代理把WebSocket请求重定向到我们设置好的域名当中。</p>
+<pre><code>curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+</code></pre>
+<p>你可以通过修改URL中的版本，可以自定义您的需要的版本。<br>
+接下来复制下面的代码创建一个 docker-compose.yml 文件:</p>
+<pre><code># docker-compose.yml
+version: '3'
+
+services:
+  bitwarden:
+    image: bitwardenrs/server
+    restart: always
+    volumes:
+      - ./bw-data:/data
+    environment:
+      WEBSOCKET_ENABLED: 'true' # Required to use websockets
+      SIGNUPS_ALLOWED: 'true'   # set to false to disable signups
+      WEB_VAULT_ENABLED: &quot;true&quot; #web客户端
+
+  caddy:
+    image: abiosoft/caddy
+    restart: always
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile:ro
+      - caddycerts:/root/.caddy
+    ports:
+      - 80:80 # needed for Let's Encrypt
+      - 443:443
+    environment:
+      ACME_AGREE: 'true'              # agree to Let's Encrypt Subscriber Agreement
+      DOMAIN: 'bitwarden.example.org' # CHANGE THIS! Used for Auto Let's Encrypt SSL
+      EMAIL: 'bitwarden@example.org'  # CHANGE THIS! Optional, provided to Let's Encrypt
+
+volumes:
+  caddycerts:
+</code></pre>
+<p>然后编辑Caddyfile文件 (不需要进行修改):</p>
+<pre><code># Caddyfile
+{$DOMAIN} {
+    tls {$EMAIL}
+    gzip
+
+    header / {
+        # Enable HTTP Strict Transport Security (HSTS)
+        Strict-Transport-Security &quot;max-age=31536000;&quot;
+        # Enable cross-site filter (XSS) and tell browser to block detected attacks
+        X-XSS-Protection &quot;1; mode=block&quot;
+        # Disallow the site to be rendered within a frame (clickjacking protection)
+        X-Frame-Options &quot;DENY&quot;
+        # Prevent search engines from indexing (optional)
+        #X-Robots-Tag &quot;none&quot;
+    }
+
+    # The negotiation endpoint is also proxied to Rocket
+    proxy /notifications/hub/negotiate bitwarden:80 {
+        transparent
+    }
+
+    # Notifications redirected to the websockets server
+    proxy /notifications/hub bitwarden:3012 {
+        websocket
+    }
+
+    # Proxy the Root directory to Rocket
+    proxy / bitwarden:80 {
+        transparent
+    }
+}
+</code></pre>
+<p>运行</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>来创建并启动这些容器，系统会在两个容器间创建一个私有网络来进行反向代理，只有Caddy被暴露在外。<br>
+运行</p>
+<pre><code>docker-compose down
+</code></pre>
+<p>停止并删除容器</p>
+<blockquote>
+<p>引用链接：<br>
+<a href="https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose">Using Docker Compose - Github</a><br>
+<a href="https://www.hanyibo.com/linux/bitwarden-docker-nginx-Proxy.html">使用Docker搭建Bitwarden密码存储服务器并定时备份数据库</a></p>
+</blockquote>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="http://localhost:4000/post/hello-gridea">
+                <h3 class="post-title">
+                  Hello Gridea
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="http://localhost:4000/images/avatar.png?v=1580734189331" class="no-responsive avatar">
+    <div class="text-muted">技术小栈</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="http://localhost:4000/post/shi-yong-docker-compose-da-jian-shu-yu-zi-ji-de-bitwarden-fu-wu-qi">使用Docker Compose搭建属于自己的Bitwarden服务器</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://localhost:4000/post/about">关于</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="http://localhost:4000/post/hello-gridea">Hello Gridea</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="http://localhost:4000/tag/M_8rk3vEm" class="badge secondary">
+          bitwarden
+        </a>
+      
+        <a href="http://localhost:4000/tag/pBxy92f8_K" class="badge secondary">
+          docker
+        </a>
+      
+        <a href="http://localhost:4000/tag/gridea" class="badge secondary">
+          Gridea
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+
+  </body>
+</html>
