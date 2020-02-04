@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
 <title>
@@ -50,6 +51,7 @@
             
                 
 </head>
+
 <body>
     <div class="wrapper">
         <header>
@@ -90,7 +92,7 @@
                         <input id="switch_default" type="checkbox" class="switch_default">
                         <label for="switch_default" class="toggleBtn"></label>
             </div>
-            <form id="gridea-search-form" data-update="1580753516512" action="/search/index.html">
+            <form id="gridea-search-form" data-update="1580796558595" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
             </form>
         </div>
@@ -109,7 +111,7 @@
                         <!--zh-->
                         <a id="mobile-toggle-theme-zh" class="a zh">&nbsp;&#x6697;&#x9ED1;</a>
                     </div>
-                    <form id="gridea-search-form" data-update="1580753516512" action="/search/index.html">
+                    <form id="gridea-search-form" data-update="1580796558595" action="/search/index.html">
                         <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
                     </form>
                     <!--en-->
@@ -174,29 +176,190 @@
 
     }
 </script>
-        <div class="main">
-            <div class="container">
-                <div class="post-wrap archive">
-                    
-                    
-                    <h3>
-                        2018
-                    </h3>
-                    
-                    
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                使用Docker Compose搭建属于自己的Bitwarden服务器
+                            </h1>
+                            
+                                    <!--zh-->
+                                    <div class="post-meta zh">
+                                        &#x4F5C;&#x8005;:
+                                        <a itemprop="author" rel="author" href="/">
+                                            技术小栈
+                                        </a>
+                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2020-02-03</a></span>
+                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a href="#">2.9 &#x5206;&#x949F;</a></span>
+                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">623</a></span>
+                                        
+                                            <span class="post-category">&#x5206;&#x7C7B;:
+                                
+                                <a href="https://sleepwood.github.io/tag/M_8rk3vEm">bitwarden</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/pBxy92f8_K">docker</a>
+                                
+                            </span>
+                                            
+                                    </div>
+                                    
+                        </header>
+                        <div class="post-content">
+                            <p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
+<!-- more -->
+<p>在终端中运行下面的命令安装 Docker。</p>
+<pre><code>curl -sSL https://get.daocloud.io/docker | sh 
+#启动docker
+sudo service docker start
+</code></pre>
+<p>Docker Compose 负责快速在集群中部署分布式应用，本文使用 docker-compose 来管理服务。在本文中我们将使用它来搭建Bitwarden_RS服务器，并使用Caddy代理把WebSocket请求重定向到我们设置好的域名当中。</p>
+<pre><code>curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+</code></pre>
+<p>你可以通过修改URL中的版本，可以自定义您的需要的版本。<br>
+接下来复制下面的代码创建一个 docker-compose.yml 文件:</p>
+<pre><code># docker-compose.yml
+version: '3'
 
-                    <article class="archive-item">
-                        <a class="archive-item-link" href="https://sleepwood.github.io/post/hello-gridea">
-                            Hello Gridea
-                        </a>
-                        <span class="archive-item-date">2018-12-12 </span>
+services:
+  bitwarden:
+    image: bitwardenrs/server
+    restart: always
+    volumes:
+      - ./bw-data:/data
+    environment:
+      WEBSOCKET_ENABLED: 'true' # Required to use websockets
+      SIGNUPS_ALLOWED: 'true'   # set to false to disable signups
+      WEB_VAULT_ENABLED: &quot;true&quot; #web客户端
+
+  caddy:
+    image: abiosoft/caddy
+    restart: always
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile:ro
+      - caddycerts:/root/.caddy
+    ports:
+      - 80:80 # needed for Let's Encrypt
+      - 443:443
+    environment:
+      ACME_AGREE: 'true'              # agree to Let's Encrypt Subscriber Agreement
+      DOMAIN: 'bitwarden.example.org' # CHANGE THIS! Used for Auto Let's Encrypt SSL
+      EMAIL: 'bitwarden@example.org'  # CHANGE THIS! Optional, provided to Let's Encrypt
+
+volumes:
+  caddycerts:
+</code></pre>
+<p>然后编辑Caddyfile文件 (不需要进行修改):</p>
+<pre><code># Caddyfile
+{$DOMAIN} {
+    tls {$EMAIL}
+    gzip
+
+    header / {
+        # Enable HTTP Strict Transport Security (HSTS)
+        Strict-Transport-Security &quot;max-age=31536000;&quot;
+        # Enable cross-site filter (XSS) and tell browser to block detected attacks
+        X-XSS-Protection &quot;1; mode=block&quot;
+        # Disallow the site to be rendered within a frame (clickjacking protection)
+        X-Frame-Options &quot;DENY&quot;
+        # Prevent search engines from indexing (optional)
+        #X-Robots-Tag &quot;none&quot;
+    }
+
+    # The negotiation endpoint is also proxied to Rocket
+    proxy /notifications/hub/negotiate bitwarden:80 {
+        transparent
+    }
+
+    # Notifications redirected to the websockets server
+    proxy /notifications/hub bitwarden:3012 {
+        websocket
+    }
+
+    # Proxy the Root directory to Rocket
+    proxy / bitwarden:80 {
+        transparent
+    }
+}
+</code></pre>
+<p>运行</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>来创建并启动这些容器，系统会在两个容器间创建一个私有网络来进行反向代理，只有Caddy被暴露在外。<br>
+运行</p>
+<pre><code>docker-compose down
+</code></pre>
+<p>停止并删除容器</p>
+<blockquote>
+<p>引用链接：<br>
+<a href="https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose">Using Docker Compose - Github</a><br>
+<a href="https://www.hanyibo.com/linux/bitwarden-docker-nginx-Proxy.html">使用Docker搭建Bitwarden密码存储服务器并定时备份数据库</a></p>
+</blockquote>
+
+                        </div>
+                        <div class="post-toc">
+                            
+                        </div>
+                        
+                            
+                                    <!--zh-->
+                                    <section class="post-copyright zh">
+                                        <p class="copyright-item ">
+                                            <span>&#x4F5C;&#x8005;:</span>
+                                            <span>技术小栈</span>
+                                        </p>
+
+                                        <p class="copyright-item">
+                                            <span>&#x6C38;&#x4E45;&#x94FE;&#x63A5;:</span>
+                                            <span><a href="https://sleepwood.github.io/post/bitwarden-docker">https://sleepwood.github.io/post/bitwarden-docker</a></span>
+                                        </p>
+
+                                        <p class="copyright-item">
+                                            <span>&#x534F;&#x8BAE;:</span>
+                                            <span>MIT License</span>
+                                        </p>
+                                    </section>
+                                    
+                                        
+                                            
+                                                    <!--zh-->
+                                                    <section class="post-tags zh">
+                                                        <div>
+                                                            <span>&#x6807;&#x7B7E;:</span>
+                                                            <span class="tag">
+                                
+                                
+                                <a href="https://sleepwood.github.io/tag/M_8rk3vEm"># bitwarden</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/pBxy92f8_K"># docker</a>
+                                
+                                
+                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <a href="javascript:window.history.back();">
+                                &#x8FD4;&#x56DE;</a>
+                                                            <span>&dot;</span>
+                                                            <a href="#">&#x4E3B;&#x9875;</a>
+                                                        </div>
+                                                    </section>
+                                                    
+                                                        <!---->
+                                                        <section class="post-nav">
+                                                            
+                                                                <a class="prev" rel="prev" href="https://sleepwood.github.io/post/nginx-proxy">
+                                                                    Nginx 反向代理本机端口
+                                                                </a>
+                                                                
+                                                                    
+                                                        </section>
                     </article>
-                    
-                    
-                    
                 </div>
+                
             </div>
-        </div>
+    </div>
+    </div>
     </div>
     
         <footer id="footer" class="footer">
@@ -254,7 +417,7 @@
                     console.clear();
                     
                     var newDate = new Date();
-                    newDate.setTime(1580753516512);
+                    newDate.setTime(1580796558595);
                     console.log(" Blog Update Time: " + newDate.toLocaleDateString());
                     console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
                 </script>
@@ -298,6 +461,10 @@
                         tpwidget("show");
                     </script>
                     
-    </div>
+        </div>
 </body>
+<script>
+    scroll();
+</script>
+
 </html>

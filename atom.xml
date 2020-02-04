@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sleepwood.github.io</id>
     <title>技术小栈</title>
-    <updated>2020-02-03T18:15:12.512Z</updated>
+    <updated>2020-02-04T06:09:23.920Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sleepwood.github.io"/>
     <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
@@ -11,9 +11,75 @@
     <icon>https://sleepwood.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 技术小栈</rights>
     <entry>
+        <title type="html"><![CDATA[Nginx 反向代理本机端口]]></title>
+        <id>https://sleepwood.github.io/post/nginx-proxy</id>
+        <link href="https://sleepwood.github.io/post/nginx-proxy">
+        </link>
+        <updated>2020-02-04T05:15:08.000Z</updated>
+        <summary type="html"><![CDATA[<p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
+<!-- more -->
+<p>在Nginx配置文件中新建一个虚拟主机，将下面的代码复制并替换</p>
+<blockquote>
+<p>注意事项：</p>
+<ul>
+<li>proxy_pass http://127.0.0.1:1234;中的HTTP,请勿写成HTTPS.</li>
+<li>proxy_pass http://127.0.0.1:1234;中1234端口为frps的HTTP端口.</li>
+<li>proxy_set_header Host $host:80;注意需加上80端口,否则会无限循环301跳转,导致网页打不开提示重定向次数过多ERR_TOO_MANY_REDIRECTS.</li>
+</ul>
+</blockquote>
+<pre><code>server {
+    listen 80;
+    #listen 443 ssl http2;
+    #你要绑定的域名
+    server_name *.yourdomain.com;
+
+    # 301 强制http跳转https
+    #if ($scheme = http) {
+    #    return  301 https://$host$request_uri;
+    #}
+
+    #SSL证书
+    #ssl_certificate /usr/local/nginx/conf/ssl/yourdomain.com.crt;
+    #ssl_certificate_key /usr/local/nginx/conf/ssl/yourdomain.com.key;
+
+    client_max_body_size 50m; 
+    client_body_buffer_size 256k;
+    client_header_timeout 3m;
+    client_body_timeout 3m;
+    send_timeout 3m;
+    proxy_connect_timeout 300s; 
+    proxy_read_timeout 300s; 
+    proxy_send_timeout 300s;
+    proxy_buffer_size 64k; 
+    proxy_buffers 4 32k; 
+    proxy_busy_buffers_size 64k;
+    proxy_temp_file_write_size 64k; 
+    proxy_ignore_client_abort on; 
+
+    location / {
+        #被绑定的本机端口
+        proxy_pass http://127.0.0.1:1234;
+        proxy_redirect off;
+        proxy_set_header Host $host:80;
+        proxy_ssl_server_name on;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+<blockquote>
+<p>引用链接：<br>
+<a href="https://docs.ioiox.com/#/configuration/nginx-proxy-pass-frps-conf">Nginx 反向代理frps</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[使用Docker Compose搭建属于自己的Bitwarden服务器]]></title>
-        <id>https://sleepwood.github.io/post/shi-yong-docker-compose-da-jian-shu-yu-zi-ji-de-bitwarden-fu-wu-qi</id>
-        <link href="https://sleepwood.github.io/post/shi-yong-docker-compose-da-jian-shu-yu-zi-ji-de-bitwarden-fu-wu-qi">
+        <id>https://sleepwood.github.io/post/bitwarden-docker</id>
+        <link href="https://sleepwood.github.io/post/bitwarden-docker">
         </link>
         <updated>2020-02-03T11:01:39.000Z</updated>
         <summary type="html"><![CDATA[<p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
@@ -108,38 +174,6 @@ volumes:
 <a href="https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose">Using Docker Compose - Github</a><br>
 <a href="https://www.hanyibo.com/linux/bitwarden-docker-nginx-Proxy.html">使用Docker搭建Bitwarden密码存储服务器并定时备份数据库</a></p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://sleepwood.github.io/post/hello-gridea</id>
-        <link href="https://sleepwood.github.io/post/hello-gridea">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>
