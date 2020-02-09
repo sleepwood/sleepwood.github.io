@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sleepwood.github.io</id>
     <title>技术小栈</title>
-    <updated>2020-02-04T06:40:40.039Z</updated>
+    <updated>2020-02-09T15:17:46.185Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sleepwood.github.io"/>
     <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
@@ -10,6 +10,72 @@
     <logo>https://sleepwood.github.io/images/avatar.png</logo>
     <icon>https://sleepwood.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 技术小栈</rights>
+    <entry>
+        <title type="html"><![CDATA[使用H5ai搭建属于自己的目录显示程序]]></title>
+        <id>https://sleepwood.github.io/post/h5ai-install</id>
+        <link href="https://sleepwood.github.io/post/h5ai-install">
+        </link>
+        <updated>2020-02-09T07:44:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>有时候我们需要分享文件或者随时使用某些文件时，除了使用百度微软等网盘进行分享外，还可以直接把文件存储到自己的服务器上然后搭建目录显示程序进行分享。市面上目录显示程序很多，本文记录一下如何使用H5ai搭建目录显示程序。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>有时候我们需要分享文件或者随时使用某些文件时，除了使用百度微软等网盘进行分享外，还可以直接把文件存储到自己的服务器上然后搭建目录显示程序进行分享。市面上目录显示程序很多，本文记录一下如何使用H5ai搭建目录显示程序。</p>
+<!-- more -->
+<h3 id="系统要求">系统要求</h3>
+<p>必须要求：</p>
+<ul>
+<li>PHP version &gt;= 5.5.0</li>
+<li>apache, lighttpd 或 nginx</li>
+</ul>
+<p>可选要求：</p>
+<ul>
+<li>图片查看支持：PHP GD 插件</li>
+<li>视频查看支持：avconv or ffmpeg 软件</li>
+<li>PDF查看支持：convert or gm</li>
+</ul>
+<h3 id="程序安装">程序安装</h3>
+<p>首先从英文官网上下载软件安装包 <a href="https://larsjung.de/h5ai/">h5ai</a> 点击右边按钮即可下载</p>
+<blockquote>
+<p>尽量不要从github上下载，因为下载下来需要手动编译，不如直接使用压缩包安装方便</p>
+</blockquote>
+<p>把下载的程序包解压会看到_h5ai这个文件夹，将其上传到你的web目录，这时你的目录大概是这个样子。</p>
+<pre><code>DOC_ROOT
+ ├─ _h5ai
+ ├─ your files
+ └─ and folders
+</code></pre>
+<p>访问 http://你的网址/_h5ai/public/index.php 访问程序的安装界面，可以根据安装界面的提示查看程序当前有效的功能。<br>
+到目前为止还不能访问搭建的网站，还需要把 <code>/_h5ai/public/index.php</code> 加入到默认首页栏中<br>
+<strong>Apache httpd(.htaccess)</strong></p>
+<pre><code>DirectoryIndex  index.html  index.php  /_h5ai/public/index.php
+</code></pre>
+<p><strong>lighttpd(lighttpd.conf)</strong></p>
+<pre><code>index-file.names += (&quot;index.html&quot;, &quot;index.php&quot;, &quot;/_h5ai/public/index.php&quot;)
+</code></pre>
+<p><strong>nginx(in nginx.conf)</strong></p>
+<pre><code>index  index.html  index.php  /_h5ai/public/index.php;
+</code></pre>
+<p>重启对应的web服务端即可应用修改，现在可以访问搭建的网站了。</p>
+<blockquote>
+<p>程序安装后仍然可以通过 http://你的网址/_h5ai/public/index.php 访问程序的安装界面</p>
+</blockquote>
+<h3 id="程序配置">程序配置</h3>
+<p>登陆网站后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行修改。配置文件在<code>_h5ai/private/conf/options.json</code>，打开配置文件后对程序进行深度自定义，下面记录一下我经常用到的几项配置设置。</p>
+<pre><code>    &quot;autorefresh&quot;//是否开启自动更新
+    &quot;crumb&quot; //可点击的面包屑导航
+    &quot;download&quot;//下载功能，可以自选下载解析方式
+    &quot;info&quot;//文件信息
+    &quot;l10n&quot;//国际化 | 翻译
+    &quot;preview-img&quot;//图片浏览格式
+    &quot;search&quot;//是否开启搜索功能
+    ……
+</code></pre>
+<p>配置文件的完整翻译会发一篇新的笔记专门记录，传送门在这里……</p>
+<blockquote>
+<p>引用链接<br>
+<a href="https://larsjung.de/h5ai/">lrsjng/h5ai</a></p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Nginx 反向代理本机端口]]></title>
         <id>https://sleepwood.github.io/post/nginx-proxy</id>
