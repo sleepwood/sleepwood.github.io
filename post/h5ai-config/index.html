@@ -1,24 +1,214 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://sleepwood.github.io</id>
-    <title>技术小栈</title>
-    <updated>2020-02-10T12:43:02.175Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://sleepwood.github.io"/>
-    <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
-    <subtitle>一个先记后看的技术堆栈</subtitle>
-    <logo>https://sleepwood.github.io/images/avatar.png</logo>
-    <icon>https://sleepwood.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 技术小栈</rights>
-    <entry>
-        <title type="html"><![CDATA[如何通过配置自定义文件定义H5ai]]></title>
-        <id>https://sleepwood.github.io/post/h5ai-config</id>
-        <link href="https://sleepwood.github.io/post/h5ai-config">
-        </link>
-        <updated>2020-02-10T07:36:17.000Z</updated>
-        <summary type="html"><![CDATA[<p>我们在搭建好h5ai程序后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行进行个性化定制。配置文件在 <code>_h5ai/private/conf/options.json</code> ，我在官网上并没有找到对配置文件的详细说明，因此在这里把整个文件进行详细说明和翻译，以备不时之需。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>我们在搭建好h5ai程序后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行进行个性化定制。配置文件在 <code>_h5ai/private/conf/options.json</code> ，我在官网上并没有找到对配置文件的详细说明，因此在这里把整个文件进行详细说明和翻译，以备不时之需。</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+<title>
+    技术小栈
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://sleepwood.github.io">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<meta name="author" content="技术小栈">
+<meta name="description" content="一个先记后看的技术堆栈">
+<meta name="keywords" content="技术小栈,极客,酷玩,笔记,博客">
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+<!--CDN样式-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/css/style.min.css" />
+<!--本地样式-->
+<!--<link rel="stylesheet" href="https://sleepwood.github.io/media/css/style.min.css" />-->
+<link rel="stylesheet" href="https://sleepwood.github.io/styles/main.css" />
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
+        <!--CDN样式-->
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/tocbot.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/script.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/itjoker233/Gridea-theme-Chic@latest/assets/media/script/icon.min.js"></script>
+        <!--本地样式-->
+        <!--<script src="https://sleepwood.github.io/media/script/tocbot.min.js"></script>
+        <script src="https://sleepwood.github.io/media/script/script.min.js"></script>
+        <script src="https://sleepwood.github.io/media/script/icon.min.js"></script>-->
+        <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/highlight.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/atelier-estuary-dark.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
+        
+            <script>
+                (function() {
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    } else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+            
+                
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="https://sleepwood.github.io">
+                    技术小栈
+                </a>
+            </div>
+
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">
+                        首页
+                    </a>
+                    
+                    <a class="menu-item" href="/posts">
+                        文章
+                    </a>
+                    
+                    <a class="menu-item" href="/archives">
+                        归档
+                    </a>
+                    
+                    <a class="menu-item" href="/tags">
+                        标签
+                    </a>
+                    
+                    <a class="menu-item" href="/post/about">
+                        关于
+                    </a>
+                    
+                    <a class="menu-item" href="/friends">
+                        友链
+                    </a>
+                    
+                        <input id="switch_default" type="checkbox" class="switch_default">
+                        <label for="switch_default" class="toggleBtn"></label>
+            </div>
+            <form id="gridea-search-form" data-update="1581338562860" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+            </form>
+        </div>
+    </nav>
+
+    
+        <nav class="navbar-mobile" id="nav-mobile">
+            <div class="container">
+                <div class="navbar-header">
+                    <div>
+                        <a href="https://sleepwood.github.io">
+                            技术小栈
+                        </a>
+                        <!--en-->
+                        <a id="mobile-toggle-theme-en" class="a en">&nbsp;Dark</a>
+                        <!--zh-->
+                        <a id="mobile-toggle-theme-zh" class="a zh">&nbsp;&#x6697;&#x9ED1;</a>
+                    </div>
+                    <form id="gridea-search-form" data-update="1581338562860" action="/search/index.html">
+                        <input class="search-input" autocomplete="off" spellcheck="false" name="q" autofocus="true" placeholder="Search...">
+                    </form>
+                    <!--en-->
+                    <div class="menu-toggle" id="menu-toggle-en" onclick="mobileBtn()">&#9776; Menu</div>
+                    <!--zh-->
+                    <div class="menu-toggle" id="menu-toggle-zh" onclick="mobileBtn()">&#9776; &#x83DC;&#x5355;</div>
+
+                </div>
+                <div class="menu" id="mobile-menu">
+                    
+                        <a class="menu-item" href="/">
+                            首页
+                        </a>
+                        
+                        <a class="menu-item" href="/posts">
+                            文章
+                        </a>
+                        
+                        <a class="menu-item" href="/archives">
+                            归档
+                        </a>
+                        
+                        <a class="menu-item" href="/tags">
+                            标签
+                        </a>
+                        
+                        <a class="menu-item" href="/post/about">
+                            关于
+                        </a>
+                        
+                        <a class="menu-item" href="/friends">
+                            友链
+                        </a>
+                        
+                </div>
+            </div>
+        </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementById("menu-toggle-en");
+        var toggleMenu_zh = document.getElementById("menu-toggle-zh");
+
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.display != "none") {
+            if (toggleMenu.classList.contains("active")) {
+                toggleMenu.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        } else if (toggleMenu_zh.display != "none") {
+            if (toggleMenu_zh.classList.contains("active")) {
+                toggleMenu_zh.classList.remove("active")
+                mobileMenu.classList.remove("active")
+            } else {
+                toggleMenu_zh.classList.add("active")
+                mobileMenu.classList.add("active")
+            }
+        }
+
+    }
+</script>
+            <div class="main">
+                <div class="container">
+                    <article class="post-wrap">
+                        <header class="post-header">
+                            <h1 class="post-title">
+                                如何通过配置自定义文件定义H5ai
+                            </h1>
+                            
+                                    <!--zh-->
+                                    <div class="post-meta zh">
+                                        &#x4F5C;&#x8005;:
+                                        <a itemprop="author" rel="author" href="/">
+                                            技术小栈
+                                        </a>
+                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2020-02-10</a></span>
+                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a href="#">6.4 &#x5206;&#x949F;</a></span>
+                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">1728</a></span>
+                                        
+                                            <span class="post-category">&#x5206;&#x7C7B;:
+                                
+                                <a href="https://sleepwood.github.io/tag/ATDIG1J1V">h5ai</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/0y5o3V5Klr">php</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/p3B9_jpPkp">目录程序</a>
+                                
+                            </span>
+                                            
+                                    </div>
+                                    
+                        </header>
+                        <div class="post-content">
+                            <p>我们在搭建好h5ai程序后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行进行个性化定制。配置文件在 <code>_h5ai/private/conf/options.json</code> ，我在官网上并没有找到对配置文件的详细说明，因此在这里把整个文件进行详细说明和翻译，以备不时之需。</p>
 <!-- more -->
 <h3 id="密码哈希值-password-hash">密码哈希值 — Password hash</h3>
 <table>
@@ -796,238 +986,208 @@
 </tr>
 </tbody>
 </table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用H5ai搭建属于自己的目录显示程序]]></title>
-        <id>https://sleepwood.github.io/post/h5ai-install</id>
-        <link href="https://sleepwood.github.io/post/h5ai-install">
-        </link>
-        <updated>2020-02-09T07:44:06.000Z</updated>
-        <summary type="html"><![CDATA[<p>有时候我们需要分享文件或者随时使用某些文件时，除了使用百度微软等网盘进行分享外，还可以直接把文件存储到自己的服务器上然后搭建目录显示程序进行分享。市面上目录显示程序很多，本文记录一下如何使用H5ai搭建目录显示程序。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>有时候我们需要分享文件或者随时使用某些文件时，除了使用百度微软等网盘进行分享外，还可以直接把文件存储到自己的服务器上然后搭建目录显示程序进行分享。市面上目录显示程序很多，本文记录一下如何使用H5ai搭建目录显示程序。</p>
-<!-- more -->
-<h3 id="系统要求">系统要求</h3>
-<p>必须要求：</p>
+
+                        </div>
+                        <div class="post-toc">
+                            <ul class="markdownIt-TOC">
+<li>
 <ul>
-<li>PHP version &gt;= 5.5.0</li>
-<li>apache, lighttpd 或 nginx</li>
-</ul>
-<p>可选要求：</p>
+<li>
 <ul>
-<li>图片查看支持：PHP GD 插件</li>
-<li>视频查看支持：avconv or ffmpeg 软件</li>
-<li>PDF查看支持：convert or gm</li>
+<li><a href="#%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C%E5%80%BC-password-hash">密码哈希值 — Password hash</a></li>
+<li><a href="#%E5%A4%96%E9%83%A8%E8%B5%84%E6%BA%90-resources">外部资源 — resources</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E8%AE%BE%E7%BD%AE-view">显示设置 — view</a></li>
+<li><a href="#%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0-autorefresh">自动刷新 — autorefresh</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89-custom">自定义 — custom</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD-download">下载 — download</a></li>
+<li><a href="#%E8%BF%87%E6%BB%A4-filter">过滤 — filter</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%A4%A7%E5%B0%8F-foldersize">文件夹大小 — foldersize</a></li>
+<li><a href="#%E8%B0%B7%E6%AD%8C%E5%88%86%E6%9E%90%E4%BB%A3%E7%A0%81-google-analytics-ua">谷歌分析代码 — google-analytics-ua</a></li>
+<li><a href="#%E4%BF%A1%E6%81%AF-info">信息 — info</a></li>
+<li><a href="#%E5%9B%BD%E9%99%85%E5%8C%96-l10n">国际化 — l10n</a></li>
+<li><a href="#piwik%E5%88%86%E6%9E%90-piwik-analytics">piwik分析 — piwik-analytics</a></li>
+<li><a href="#%E9%9F%B3%E9%A2%91%E9%A2%84%E8%A7%88-preview-aud">音频预览 — preview-aud</a></li>
+<li><a href="#%E5%9B%BE%E7%89%87%E9%A2%84%E8%A7%88-preview-img">图片预览 — preview-img</a></li>
+<li><a href="#%E6%96%87%E6%9C%AC%E9%A2%84%E8%A7%88-preview-txt">文本预览 — preview-txt</a></li>
+<li><a href="#%E8%A7%86%E9%A2%91%E9%A2%84%E8%A7%88-preview-vid">视频预览 — preview-vid</a></li>
+<li><a href="#%E6%90%9C%E7%B4%A2-search">搜索 — search</a></li>
+<li><a href="#%E6%8E%92%E5%BA%8F-sort">排序 — sort</a></li>
+<li><a href="#%E7%BC%A9%E7%95%A5%E5%9B%BE-thumbnails">缩略图 — thumbnails</a></li>
+<li><a href="#%E6%A0%87%E9%A2%98-title">标题 — title</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E6%A0%91-tree">文件树 — tree</a></li>
 </ul>
-<h3 id="程序安装">程序安装</h3>
-<p>首先从英文官网上下载软件安装包 <a href="https://larsjung.de/h5ai/">h5ai</a> 点击右边按钮即可下载</p>
-<blockquote>
-<p>尽量不要从github上下载，因为下载下来需要手动编译，不如直接使用压缩包安装方便</p>
-</blockquote>
-<p>把下载的程序包解压会看到_h5ai这个文件夹，将其上传到你的web目录，这时你的目录大概是这个样子。</p>
-<pre><code>DOC_ROOT
- ├─ _h5ai
- ├─ your files
- └─ and folders
-</code></pre>
-<p>访问 http://你的网址/_h5ai/public/index.php 访问程序的安装界面，可以根据安装界面的提示查看程序当前有效的功能。<br>
-到目前为止还不能访问搭建的网站，还需要把 <code>/_h5ai/public/index.php</code> 加入到默认首页栏中<br>
-<strong>Apache httpd(.htaccess)</strong></p>
-<pre><code>DirectoryIndex  index.html  index.php  /_h5ai/public/index.php
-</code></pre>
-<p><strong>lighttpd(lighttpd.conf)</strong></p>
-<pre><code>index-file.names += (&quot;index.html&quot;, &quot;index.php&quot;, &quot;/_h5ai/public/index.php&quot;)
-</code></pre>
-<p><strong>nginx(in nginx.conf)</strong></p>
-<pre><code>index  index.html  index.php  /_h5ai/public/index.php;
-</code></pre>
-<p>重启对应的web服务端即可应用修改，现在可以访问搭建的网站了。</p>
-<blockquote>
-<p>程序安装后仍然可以通过 http://你的网址/_h5ai/public/index.php 访问程序的安装界面</p>
-</blockquote>
-<h3 id="程序配置">程序配置</h3>
-<p>登陆网站后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行修改。配置文件在<code>_h5ai/private/conf/options.json</code>，打开配置文件后对程序进行深度自定义，下面记录一下我经常用到的几项配置设置。</p>
-<pre><code>    &quot;autorefresh&quot;//是否开启自动更新
-    &quot;crumb&quot; //可点击的面包屑导航
-    &quot;download&quot;//下载功能，可以自选下载解析方式
-    &quot;info&quot;//文件信息
-    &quot;l10n&quot;//国际化 | 翻译
-    &quot;preview-img&quot;//图片浏览格式
-    &quot;search&quot;//是否开启搜索功能
-    ……
-</code></pre>
-<p>配置文件的设置我专门发一篇新的笔记，传送门在这里……</p>
-<blockquote>
-<p>引用链接<br>
-<a href="https://larsjung.de/h5ai/">lrsjng/h5ai</a></p>
-</blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Nginx 反向代理本机端口]]></title>
-        <id>https://sleepwood.github.io/post/nginx-proxy</id>
-        <link href="https://sleepwood.github.io/post/nginx-proxy">
-        </link>
-        <updated>2020-02-04T05:15:08.000Z</updated>
-        <summary type="html"><![CDATA[<p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
-<!-- more -->
-<p>在Nginx配置文件中新建一个虚拟主机，将下面的代码复制并替换</p>
-<blockquote>
-<p>注意事项：</p>
-<ul>
-<li>proxy_pass http://127.0.0.1:1234;中的HTTP,请勿写成HTTPS.</li>
-<li>proxy_pass http://127.0.0.1:1234;中1234端口为frps的HTTP端口.</li>
-<li>proxy_set_header Host $host:80;注意需加上80端口,否则会无限循环301跳转,导致网页打不开提示重定向次数过多ERR_TOO_MANY_REDIRECTS.</li>
+</li>
 </ul>
-</blockquote>
-<pre><code>server {
-    listen 80;
-    #listen 443 ssl http2;
-    #你要绑定的域名
-    server_name *.yourdomain.com;
+</li>
+</ul>
 
-    # 301 强制http跳转https
-    #if ($scheme = http) {
-    #    return  301 https://$host$request_uri;
-    #}
+                        </div>
+                        
+                            
+                                    <!--zh-->
+                                    <section class="post-copyright zh">
+                                        <p class="copyright-item ">
+                                            <span>&#x4F5C;&#x8005;:</span>
+                                            <span>技术小栈</span>
+                                        </p>
 
-    #SSL证书
-    #ssl_certificate /usr/local/nginx/conf/ssl/yourdomain.com.crt;
-    #ssl_certificate_key /usr/local/nginx/conf/ssl/yourdomain.com.key;
+                                        <p class="copyright-item">
+                                            <span>&#x6C38;&#x4E45;&#x94FE;&#x63A5;:</span>
+                                            <span><a href="https://sleepwood.github.io/post/h5ai-config">https://sleepwood.github.io/post/h5ai-config</a></span>
+                                        </p>
 
-    client_max_body_size 50m; 
-    client_body_buffer_size 256k;
-    client_header_timeout 3m;
-    client_body_timeout 3m;
-    send_timeout 3m;
-    proxy_connect_timeout 300s; 
-    proxy_read_timeout 300s; 
-    proxy_send_timeout 300s;
-    proxy_buffer_size 64k; 
-    proxy_buffers 4 32k; 
-    proxy_busy_buffers_size 64k;
-    proxy_temp_file_write_size 64k; 
-    proxy_ignore_client_abort on; 
+                                        <p class="copyright-item">
+                                            <span>&#x534F;&#x8BAE;:</span>
+                                            <span>MIT License</span>
+                                        </p>
+                                    </section>
+                                    
+                                        
+                                            
+                                                    <!--zh-->
+                                                    <section class="post-tags zh">
+                                                        <div>
+                                                            <span>&#x6807;&#x7B7E;:</span>
+                                                            <span class="tag">
+                                
+                                
+                                <a href="https://sleepwood.github.io/tag/ATDIG1J1V"># h5ai</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/0y5o3V5Klr"># php</a>
+                                
+                                <a href="https://sleepwood.github.io/tag/p3B9_jpPkp"># 目录程序</a>
+                                
+                                
+                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <a href="javascript:window.history.back();">
+                                &#x8FD4;&#x56DE;</a>
+                                                            <span>&dot;</span>
+                                                            <a href="#">&#x4E3B;&#x9875;</a>
+                                                        </div>
+                                                    </section>
+                                                    
+                                                        <!---->
+                                                        <section class="post-nav">
+                                                            
+                                                                    
+                                                                        <a class="next" rel="next" href="https://sleepwood.github.io/post/h5ai-install">
+                                                                            使用H5ai搭建属于自己的目录显示程序
+                                                                        </a>
+                                                                        
+                                                        </section>
+                    </article>
+                </div>
+                
+            </div>
+    </div>
+    </div>
+    </div>
+    
+        <footer id="footer" class="footer">
 
-    location / {
-        #被绑定的本机端口
-        proxy_pass http://127.0.0.1:1234;
-        proxy_redirect off;
-        proxy_set_header Host $host:80;
-        proxy_ssl_server_name on;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-</code></pre>
-<blockquote>
-<p>引用链接：<br>
-<a href="https://docs.ioiox.com/#/configuration/nginx-proxy-pass-frps-conf">Nginx 反向代理frps</a></p>
-</blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用Docker Compose搭建属于自己的Bitwarden服务器]]></title>
-        <id>https://sleepwood.github.io/post/bitwarden-docker</id>
-        <link href="https://sleepwood.github.io/post/bitwarden-docker">
-        </link>
-        <updated>2020-02-03T11:01:39.000Z</updated>
-        <summary type="html"><![CDATA[<p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
-<!-- more -->
-<p>在终端中运行下面的命令安装 Docker。</p>
-<pre><code>curl -sSL https://get.daocloud.io/docker | sh 
-#启动docker
-sudo service docker start
-</code></pre>
-<p>Docker Compose 负责快速在集群中部署分布式应用，本文使用 docker-compose 来管理服务。在本文中我们将使用它来搭建Bitwarden_RS服务器，并使用Caddy代理把WebSocket请求重定向到我们设置好的域名当中。</p>
-<pre><code>curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-</code></pre>
-<p>你可以通过修改URL中的版本，可以自定义您的需要的版本。<br>
-接下来复制下面的代码创建一个 docker-compose.yml 文件:</p>
-<pre><code># docker-compose.yml
-version: '3'
+            <div class="copyright">
+                <div class="Like">
+                    <div class="tip" data-tooltip="Do you like it?">
+                        <a href="https://github.com/ITJoker233/Gridea-theme-Chic" target="_blank" title=""><svg class="icon"
+                        aria-hidden="true">
+                        <use xlink:href="#like"></use>
+                    </svg><b class="like_text" id="star"></b></a>
+                    </div>
+                </div>
+                Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+                    
+                        <b id="hitokoto"></b><br>
+                        
+                            
+                                            <svg viewBox="0 0 1024 1024" style="margin-left: 5px;margin-right: 5px;" version="1.0" width="8" height="8" class="my-face">
+            <path
+                d="M863.597631 513.574282l-271.33965-140.213484L729.783667 81.926656c3.583731-7.87141 7.167462-15.742819 7.167462-25.214109C736.887134 25.226908 708.345275 0.012799 672.635953 0.012799a63.611229 63.611229 0 0 0-39.293053 12.607055c-1.791866 1.59988-3.519736 3.19976-5.311602 3.19976L147.87531 418.925381a55.547834 55.547834 0 0 0-19.646527 47.356448c1.791866 17.278704 14.27093 33.021523 32.125591 42.492813l271.33965 141.749369L292.504463 945.221908c-12.479064 25.214109-1.791866 53.563983 23.166262 69.306802 10.751194 6.335525 23.230258 9.47129 35.709322 9.47129 16.062795 0 32.125591-4.735645 44.604655-15.742819l480.091993-403.297753a55.547834 55.547834 0 0 0 19.646526-47.228458 61.243407 61.243407 0 0 0-32.12559-44.156688z"
+                fill="#93b5cf"></path>
+        </svg>
+                                            技术小栈 &copy;Copyright
+                                                <script>
+                                                    var date = new Date();
+                                                    document.write("" + date.getFullYear());
+                                                </script>
+                                                | Powered by <a href="https://coding.net" target="_blank">Coding.net</a>
+            </div>
+            <div id="update" style="display:none;">
+                off
+            </div>
+            
+                    <script>
+                        var pat = '';
+                        
+                        document.write('<div id="home_path" style="display:none;">' + document.location.protocol + '//' + window.document.location.hostname + pat + '</div>')
+                    </script>
+        </footer>
+        
+            <script src='https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js'></script>
+            
+                <script>
+                    
+                    
+                    loadlive2d();
+                    
+                    
+                    hitokoto();
+                    
+                    
+                    getStar();
+                    hljs.initHighlighting();
+                    console.clear();
+                    
+                    var newDate = new Date();
+                    newDate.setTime(1581338562860);
+                    console.log(" Blog Update Time: " + newDate.toLocaleDateString());
+                    console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
+                </script>
+                
+                    <div id="tp-weather-widget" style="background: #666;display: flex;"></div>
+                    <script>
+                        (function(T, h, i, n, k, P, a, g, e) {
+                            g = function() {
+                                P = h.createElement(i);
+                                a = h.getElementsByTagName(i)[0];
+                                P.src = k;
+                                P.charset = "utf-8";
+                                P.async = 1;
+                                a.parentNode.insertBefore(P, a)
+                            };
+                            T["ThinkPageWeatherWidgetObject"] = n;
+                            T[n] || (T[n] = function() {
+                                (T[n].q = T[n].q || []).push(arguments)
+                            });
+                            T[n].l = +new Date();
+                            if (T.attachEvent) {
+                                T.attachEvent("onload", g)
+                            } else {
+                                T.addEventListener("load", g, false)
+                            }
+                        }(window, document, "script", "tpwidget", "//widget.seniverse.com/widget/chameleon.js"))
+                    </script>
+                    <script>
+                        tpwidget("init", {
+                            "flavor": "bubble",
+                            "location": "WX4FBXXFKE4F",
+                            "geolocation": "enabled",
+                            "position": "bottom-left",
+                            "margin": "10px 10px",
+                            "language": "zh-chs",
+                            "unit": "c",
+                            "theme": "chameleon",
+                            "uid": "UFC977E1C7",
+                            "hash": "213ad798bc472dc365da3a9d4a9ff115"
+                        });
+                        tpwidget("show");
+                    </script>
+                    
+        </div>
+</body>
+<script>
+    scroll();
+</script>
 
-services:
-  bitwarden:
-    image: bitwardenrs/server
-    restart: always
-    volumes:
-      - ./bw-data:/data
-    environment:
-      WEBSOCKET_ENABLED: 'true' # Required to use websockets
-      SIGNUPS_ALLOWED: 'true'   # set to false to disable signups
-      WEB_VAULT_ENABLED: &quot;true&quot; #web客户端
-
-  caddy:
-    image: abiosoft/caddy
-    restart: always
-    volumes:
-      - ./Caddyfile:/etc/Caddyfile:ro
-      - caddycerts:/root/.caddy
-    ports:
-      - 80:80 # needed for Let's Encrypt
-      - 443:443
-    environment:
-      ACME_AGREE: 'true'              # agree to Let's Encrypt Subscriber Agreement
-      DOMAIN: 'bitwarden.example.org' # CHANGE THIS! Used for Auto Let's Encrypt SSL
-      EMAIL: 'bitwarden@example.org'  # CHANGE THIS! Optional, provided to Let's Encrypt
-
-volumes:
-  caddycerts:
-</code></pre>
-<p>然后编辑Caddyfile文件 (不需要进行修改):</p>
-<pre><code># Caddyfile
-{$DOMAIN} {
-    tls {$EMAIL}
-    gzip
-
-    header / {
-        # Enable HTTP Strict Transport Security (HSTS)
-        Strict-Transport-Security &quot;max-age=31536000;&quot;
-        # Enable cross-site filter (XSS) and tell browser to block detected attacks
-        X-XSS-Protection &quot;1; mode=block&quot;
-        # Disallow the site to be rendered within a frame (clickjacking protection)
-        X-Frame-Options &quot;DENY&quot;
-        # Prevent search engines from indexing (optional)
-        #X-Robots-Tag &quot;none&quot;
-    }
-
-    # The negotiation endpoint is also proxied to Rocket
-    proxy /notifications/hub/negotiate bitwarden:80 {
-        transparent
-    }
-
-    # Notifications redirected to the websockets server
-    proxy /notifications/hub bitwarden:3012 {
-        websocket
-    }
-
-    # Proxy the Root directory to Rocket
-    proxy / bitwarden:80 {
-        transparent
-    }
-}
-</code></pre>
-<p>运行</p>
-<pre><code>docker-compose up -d
-</code></pre>
-<p>来创建并启动这些容器，系统会在两个容器间创建一个私有网络来进行反向代理，只有Caddy被暴露在外。<br>
-运行</p>
-<pre><code>docker-compose down
-</code></pre>
-<p>停止并删除容器</p>
-<blockquote>
-<p>引用链接：<br>
-<a href="https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose">Using Docker Compose - Github</a><br>
-<a href="https://www.hanyibo.com/linux/bitwarden-docker-nginx-Proxy.html">使用Docker搭建Bitwarden密码存储服务器并定时备份数据库</a></p>
-</blockquote>
-]]></content>
-    </entry>
-</feed>
+</html>
