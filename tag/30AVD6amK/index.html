@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
 <title>
@@ -51,7 +50,6 @@
             
                 
 </head>
-
 <body>
     <div class="wrapper">
         <header>
@@ -176,160 +174,29 @@
 
     }
 </script>
-            <div class="main">
-                <div class="container">
-                    <article class="post-wrap">
-                        <header class="post-header">
-                            <h1 class="post-title">
-                                Nginx 反向代理本机端口
-                            </h1>
-                            
-                                    <!--zh-->
-                                    <div class="post-meta zh">
-                                        &#x4F5C;&#x8005;:
-                                        <a itemprop="author" rel="author" href="/">
-                                            技术小栈
-                                        </a>
-                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2020-02-04</a></span>
-                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a href="#">1.4 &#x5206;&#x949F;</a></span>
-                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">320</a></span>
-                                        
-                                            <span class="post-category">&#x5206;&#x7C7B;:
-                                
-                                <a href="https://sleepwood.github.io/tag/oa9ZOvYR5">nginx</a>
-                                
-                                <a href="https://sleepwood.github.io/tag/jAXw15LD6c">反代</a>
-                                
-                            </span>
-                                            
-                                    </div>
-                                    
-                        </header>
-                        <div class="post-content">
-                            <p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
-<!-- more -->
-<p>在Nginx配置文件中新建一个虚拟主机，将下面的代码复制并替换</p>
-<blockquote>
-<p>注意事项：</p>
-<ul>
-<li>proxy_pass http://127.0.0.1:1234;中的HTTP,请勿写成HTTPS.</li>
-<li>proxy_pass http://127.0.0.1:1234;中1234端口为frps的HTTP端口.</li>
-<li>proxy_set_header Host $host:80;注意需加上80端口,否则会无限循环301跳转,导致网页打不开提示重定向次数过多ERR_TOO_MANY_REDIRECTS.</li>
-</ul>
-</blockquote>
-<pre><code>server {
-    listen 80;
-    #listen 443 ssl http2;
-    #你要绑定的域名
-    server_name *.yourdomain.com;
+        <div class="main">
+            <div class="container">
+                <div class="post-wrap archive">
+                    
+                    
+                    <h3>
+                        2020
+                    </h3>
+                    
+                    
 
-    # 301 强制http跳转https
-    #if ($scheme = http) {
-    #    return  301 https://$host$request_uri;
-    #}
-
-    #SSL证书
-    #ssl_certificate /usr/local/nginx/conf/ssl/yourdomain.com.crt;
-    #ssl_certificate_key /usr/local/nginx/conf/ssl/yourdomain.com.key;
-
-    client_max_body_size 50m; 
-    client_body_buffer_size 256k;
-    client_header_timeout 3m;
-    client_body_timeout 3m;
-    send_timeout 3m;
-    proxy_connect_timeout 300s; 
-    proxy_read_timeout 300s; 
-    proxy_send_timeout 300s;
-    proxy_buffer_size 64k; 
-    proxy_buffers 4 32k; 
-    proxy_busy_buffers_size 64k;
-    proxy_temp_file_write_size 64k; 
-    proxy_ignore_client_abort on; 
-
-    location / {
-        #被绑定的本机端口
-        proxy_pass http://127.0.0.1:1234;
-        proxy_redirect off;
-        proxy_set_header Host $host:80;
-        proxy_ssl_server_name on;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-</code></pre>
-<blockquote>
-<p>引用链接：<br>
-<a href="https://docs.ioiox.com/#/configuration/nginx-proxy-pass-frps-conf">Nginx 反向代理frps</a></p>
-</blockquote>
-
-                        </div>
-                        <div class="post-toc">
-                            
-                        </div>
-                        
-                            
-                                    <!--zh-->
-                                    <section class="post-copyright zh">
-                                        <p class="copyright-item ">
-                                            <span>&#x4F5C;&#x8005;:</span>
-                                            <span>技术小栈</span>
-                                        </p>
-
-                                        <p class="copyright-item">
-                                            <span>&#x6C38;&#x4E45;&#x94FE;&#x63A5;:</span>
-                                            <span><a href="https://sleepwood.github.io/post/nginx-proxy">https://sleepwood.github.io/post/nginx-proxy</a></span>
-                                        </p>
-
-                                        <p class="copyright-item">
-                                            <span>&#x534F;&#x8BAE;:</span>
-                                            <span>MIT License</span>
-                                        </p>
-                                    </section>
-                                    
-                                        
-                                            
-                                                    <!--zh-->
-                                                    <section class="post-tags zh">
-                                                        <div>
-                                                            <span>&#x6807;&#x7B7E;:</span>
-                                                            <span class="tag">
-                                
-                                
-                                <a href="https://sleepwood.github.io/tag/oa9ZOvYR5"># nginx</a>
-                                
-                                <a href="https://sleepwood.github.io/tag/jAXw15LD6c"># 反代</a>
-                                
-                                
-                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <a href="javascript:window.history.back();">
-                                &#x8FD4;&#x56DE;</a>
-                                                            <span>&dot;</span>
-                                                            <a href="#">&#x4E3B;&#x9875;</a>
-                                                        </div>
-                                                    </section>
-                                                    
-                                                        <!---->
-                                                        <section class="post-nav">
-                                                            
-                                                                <a class="prev" rel="prev" href="https://sleepwood.github.io/post/h5ai-install">
-                                                                    使用H5ai搭建属于自己的目录显示程序
-                                                                </a>
-                                                                
-                                                                    
-                                                                        <a class="next" rel="next" href="https://sleepwood.github.io/post/bitwarden-docker">
-                                                                            使用Docker Compose搭建属于自己的Bitwarden服务器
-                                                                        </a>
-                                                                        
-                                                        </section>
+                    <article class="archive-item">
+                        <a class="archive-item-link" href="https://sleepwood.github.io/post/git">
+                            Git 的常用知识与命令
+                        </a>
+                        <span class="archive-item-date">2020-02-23 </span>
                     </article>
+                    
+                    
+                    
                 </div>
-                
             </div>
-    </div>
-    </div>
+        </div>
     </div>
     
         <footer id="footer" class="footer">
@@ -431,10 +298,6 @@
                         tpwidget("show");
                     </script>
                     
-        </div>
+    </div>
 </body>
-<script>
-    scroll();
-</script>
-
 </html>
