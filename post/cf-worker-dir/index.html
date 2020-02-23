@@ -181,7 +181,7 @@
                     <article class="post-wrap">
                         <header class="post-header">
                             <h1 class="post-title">
-                                使用Docker Compose搭建属于自己的Bitwarden服务器
+                                CF-Worker-Dir 几秒钟搭建属于自己的导航页
                             </h1>
                             
                                     <!--zh-->
@@ -190,15 +190,15 @@
                                         <a itemprop="author" rel="author" href="/">
                                             技术小栈
                                         </a>
-                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2020-02-03</a></span>
-                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a href="#">2.9 &#x5206;&#x949F;</a></span>
-                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">623</a></span>
+                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2020-02-20</a></span>
+                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a href="#">2.5 &#x5206;&#x949F;</a></span>
+                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">617</a></span>
                                         
                                             <span class="post-category">&#x5206;&#x7C7B;:
                                 
-                                <a href="https://sleepwood.github.io/tag/M_8rk3vEm">bitwarden</a>
+                                <a href="https://sleepwood.github.io/tag/ojVjKJfIz">cf-worker-dir</a>
                                 
-                                <a href="https://sleepwood.github.io/tag/pBxy92f8_K">docker</a>
+                                <a href="https://sleepwood.github.io/tag/L1XkDfLCL-">作品</a>
                                 
                             </span>
                                             
@@ -206,100 +206,102 @@
                                     
                         </header>
                         <div class="post-content">
-                            <p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
+                            <p>CF-Worker-Dir是一款适用于Cloudflare Worker平台上的云函数程序，可以使用它在一分钟内搭建属于自己的导航页面。CF-Worker-Dir提供丰富的自定义配置，同时它还可以预留了接口帮助你售出自己域名。如果你的域名还没有搭建网站，不如先利用CF-Worker-Dir让你的域名不再浪费。😉</p>
 <!-- more -->
-<p>在终端中运行下面的命令安装 Docker。</p>
-<pre><code>curl -sSL https://get.daocloud.io/docker | sh 
-#启动docker
-sudo service docker start
-</code></pre>
-<p>Docker Compose 负责快速在集群中部署分布式应用，本文使用 docker-compose 来管理服务。在本文中我们将使用它来搭建Bitwarden_RS服务器，并使用Caddy代理把WebSocket请求重定向到我们设置好的域名当中。</p>
-<pre><code>curl -L https://get.daocloud.io/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-</code></pre>
-<p>你可以通过修改URL中的版本，可以自定义您的需要的版本。<br>
-接下来复制下面的代码创建一个 docker-compose.yml 文件:</p>
-<pre><code># docker-compose.yml
-version: '3'
-
-services:
-  bitwarden:
-    image: bitwardenrs/server
-    restart: always
-    volumes:
-      - ./bw-data:/data
-    environment:
-      WEBSOCKET_ENABLED: 'true' # Required to use websockets
-      SIGNUPS_ALLOWED: 'true'   # set to false to disable signups
-      WEB_VAULT_ENABLED: &quot;true&quot; #web客户端
-
-  caddy:
-    image: abiosoft/caddy
-    restart: always
-    volumes:
-      - ./Caddyfile:/etc/Caddyfile:ro
-      - caddycerts:/root/.caddy
-    ports:
-      - 80:80 # needed for Let's Encrypt
-      - 443:443
-    environment:
-      ACME_AGREE: 'true'              # agree to Let's Encrypt Subscriber Agreement
-      DOMAIN: 'bitwarden.example.org' # CHANGE THIS! Used for Auto Let's Encrypt SSL
-      EMAIL: 'bitwarden@example.org'  # CHANGE THIS! Optional, provided to Let's Encrypt
-
-volumes:
-  caddycerts:
-</code></pre>
-<p>然后编辑Caddyfile文件 (不需要进行修改):</p>
-<pre><code># Caddyfile
-{$DOMAIN} {
-    tls {$EMAIL}
-    gzip
-
-    header / {
-        # Enable HTTP Strict Transport Security (HSTS)
-        Strict-Transport-Security &quot;max-age=31536000;&quot;
-        # Enable cross-site filter (XSS) and tell browser to block detected attacks
-        X-XSS-Protection &quot;1; mode=block&quot;
-        # Disallow the site to be rendered within a frame (clickjacking protection)
-        X-Frame-Options &quot;DENY&quot;
-        # Prevent search engines from indexing (optional)
-        #X-Robots-Tag &quot;none&quot;
+<p>🎉<a href="http://gethe.best/">演示地址</a></p>
+<details>
+<summary>📷程序截图</summary>
+<img src="https://i.loli.net/2020/02/14/ahU32dQxMct9ugX.png"/>
+</details>
+<h2 id="程序安装">程序安装</h2>
+<h3 id="快速安装">快速安装</h3>
+<ol>
+<li>在 <a href="https://workers.cloudflare.com/">Cloudflare Worker</a> 管理页面创建一个新的 <strong>Worker</strong> 。</li>
+<li>在Worker编辑页面左边粘贴 <code>index.js</code> 中的代码。</li>
+<li>根据自身需要修改 <code>config</code> 的配置内容</li>
+</ol>
+<h3 id="进阶安装">进阶安装</h3>
+<blockquote>
+<p>如何绑定自己的域名</p>
+</blockquote>
+<ol>
+<li>根据上文快速安装完成，回到域名管理面板</li>
+<li>点击 <code>Workers</code> 进入Workers管理页面</li>
+<li>点击 <code>Add route</code> 设置新的路由</li>
+<li><code>Route</code> 可以输入自己想使用的子域名，如果在根域名上使用直接把当前域名输入即可，<code>Worker</code> 选择上文快速安装好的Worker</li>
+</ol>
+<blockquote>
+<p><code>Route</code> 所使用的域名地址<strong>必须已经解析好A记录</strong>，如果没有能绑定的IP地址，可以输入8.8.8.8占位：）</p>
+</blockquote>
+<h2 id="系统配置">系统配置</h2>
+<p>CF-Worker-Dir允许用户自定义导航页面，配置内容如下：</p>
+<pre><code>const config = {
+  title: &quot;自定义导航&quot;,                 //自定义网站标题
+  subtitle: &quot;Cloudflare Workers Nav&quot;, //自定义网站副标题
+  logo_icon: &quot;sitemap&quot;,               //选择网站logo icon 暂时只支持 (eg:https://semantic-ui.com/elements/icon.html)
+  hitokoto: true,                     //开启 一言 插件
+  search:true,                        //开启 搜索 功能  
+  search_engine:[                     //搜索引擎列表
+    {
+      name:&quot;百度一下&quot;,                   //搜索引擎名称
+      template:&quot;https://www.baidu.com/s?wd=$s&quot;  //搜索引擎模板（含关键词$s）
     }
-
-    # The negotiation endpoint is also proxied to Rocket
-    proxy /notifications/hub/negotiate bitwarden:80 {
-        transparent
+  ],
+  selling_ads: true,                  //是否要开启网址推广
+  sell_info:{
+    domain:&quot;example.com&quot;,             //当前域名
+    price:500,                        //价格
+    mon_unit:&quot;yen sign&quot;,              //货币单位 (eg:https://semantic-ui.com/elements/icon.html#computers)
+    contact:[                         //联系方式
+      {
+        type:&quot;envelope&quot;,              //通讯工具 (&quot;weixin&quot;,&quot;qq&quot;,&quot;telegram plane&quot;,&quot;envelope&quot; or &quot;phone&quot;)
+        content:&quot;info@example.com&quot;    //号码/地址
+      }
+    ]                        
+  },
+  lists: [                            //网址信息
+    {
+      name:&quot;技术&quot;,                    //网址类别
+      icon:&quot;code&quot;,                    //网址类别icon 暂时只支持 (eg:https://semantic-ui.com/elements/icon.html)
+      list:[
+        {
+          url:&quot;https://oschina.net/&quot;, //网站url
+          name:&quot;开源中国&quot;,             //网站名称
+          desc:&quot;领先的中文开源技术社区&quot; //网站描述
+        }
+      ]
     }
-
-    # Notifications redirected to the websockets server
-    proxy /notifications/hub bitwarden:3012 {
-        websocket
-    }
-
-    # Proxy the Root directory to Rocket
-    proxy / bitwarden:80 {
-        transparent
-    }
+  ]
 }
 </code></pre>
-<p>运行</p>
-<pre><code>docker-compose up -d
-</code></pre>
-<p>来创建并启动这些容器，系统会在两个容器间创建一个私有网络来进行反向代理，只有Caddy被暴露在外。<br>
-运行</p>
-<pre><code>docker-compose down
-</code></pre>
-<p>停止并删除容器</p>
-<blockquote>
-<p>引用链接：<br>
-<a href="https://github.com/dani-garcia/bitwarden_rs/wiki/Using-Docker-Compose">Using Docker Compose - Github</a><br>
-<a href="https://www.hanyibo.com/linux/bitwarden-docker-nginx-Proxy.html">使用Docker搭建Bitwarden密码存储服务器并定时备份数据库</a></p>
-</blockquote>
+<h2 id="todo">Todo</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1951928"><label class="task-list-item-label" for="task-item-1951928"> 模块化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1480858"><label class="task-list-item-label" for="task-item-1480858"> 米表列表</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2356268"><label class="task-list-item-label" for="task-item-2356268"> 插件化（倒计时/一言/小工具）</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1093164"><label class="task-list-item-label" for="task-item-1093164"> 国际化</label></li>
+</ul>
+<h2 id="licence">Licence</h2>
+<p>MIT</p>
 
                         </div>
                         <div class="post-toc">
-                            
+                            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%A8%8B%E5%BA%8F%E5%AE%89%E8%A3%85">程序安装</a>
+<ul>
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85">快速安装</a></li>
+<li><a href="#%E8%BF%9B%E9%98%B6%E5%AE%89%E8%A3%85">进阶安装</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE">系统配置</a></li>
+<li><a href="#todo">Todo</a></li>
+<li><a href="#licence">Licence</a></li>
+</ul>
+</li>
+</ul>
+
                         </div>
                         
                             
@@ -312,7 +314,7 @@ volumes:
 
                                         <p class="copyright-item">
                                             <span>&#x6C38;&#x4E45;&#x94FE;&#x63A5;:</span>
-                                            <span><a href="https://sleepwood.github.io/post/bitwarden-docker">https://sleepwood.github.io/post/bitwarden-docker</a></span>
+                                            <span><a href="https://sleepwood.github.io/post/cf-worker-dir">https://sleepwood.github.io/post/cf-worker-dir</a></span>
                                         </p>
 
                                         <p class="copyright-item">
@@ -330,9 +332,9 @@ volumes:
                                                             <span class="tag">
                                 
                                 
-                                <a href="https://sleepwood.github.io/tag/M_8rk3vEm"># bitwarden</a>
+                                <a href="https://sleepwood.github.io/tag/ojVjKJfIz"># cf-worker-dir</a>
                                 
-                                <a href="https://sleepwood.github.io/tag/pBxy92f8_K"># docker</a>
+                                <a href="https://sleepwood.github.io/tag/L1XkDfLCL-"># 作品</a>
                                 
                                 
                             </span>
@@ -348,11 +350,15 @@ volumes:
                                                         <!---->
                                                         <section class="post-nav">
                                                             
-                                                                <a class="prev" rel="prev" href="https://sleepwood.github.io/post/nginx-proxy">
-                                                                    Nginx 反向代理本机端口
+                                                                <a class="prev" rel="prev" href="https://sleepwood.github.io/post/git">
+                                                                    Git 的常用知识与命令
                                                                 </a>
                                                                 
                                                                     
+                                                                        <a class="next" rel="next" href="https://sleepwood.github.io/post/h5ai-config">
+                                                                            如何通过配置自定义文件定义H5ai
+                                                                        </a>
+                                                                        
                                                         </section>
                     </article>
                 </div>

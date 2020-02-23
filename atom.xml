@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sleepwood.github.io</id>
     <title>技术小栈</title>
-    <updated>2020-02-23T07:37:17.682Z</updated>
+    <updated>2020-02-23T07:46:49.151Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sleepwood.github.io"/>
     <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
@@ -154,6 +154,93 @@ git push -u origin master
 <a href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰的官方网站</a><br>
 <a href="https://gist.github.com/guweigang/9848271">git命令大全</a></p>
 </blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CF-Worker-Dir 几秒钟搭建属于自己的导航页]]></title>
+        <id>https://sleepwood.github.io/post/cf-worker-dir</id>
+        <link href="https://sleepwood.github.io/post/cf-worker-dir">
+        </link>
+        <updated>2020-02-20T07:37:48.000Z</updated>
+        <summary type="html"><![CDATA[<p>CF-Worker-Dir是一款适用于Cloudflare Worker平台上的云函数程序，可以使用它在一分钟内搭建属于自己的导航页面。CF-Worker-Dir提供丰富的自定义配置，同时它还可以预留了接口帮助你售出自己域名。如果你的域名还没有搭建网站，不如先利用CF-Worker-Dir让你的域名不再浪费。😉</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>CF-Worker-Dir是一款适用于Cloudflare Worker平台上的云函数程序，可以使用它在一分钟内搭建属于自己的导航页面。CF-Worker-Dir提供丰富的自定义配置，同时它还可以预留了接口帮助你售出自己域名。如果你的域名还没有搭建网站，不如先利用CF-Worker-Dir让你的域名不再浪费。😉</p>
+<!-- more -->
+<p>🎉<a href="http://gethe.best/">演示地址</a></p>
+<details>
+<summary>📷程序截图</summary>
+<img src="https://i.loli.net/2020/02/14/ahU32dQxMct9ugX.png"/>
+</details>
+<h2 id="程序安装">程序安装</h2>
+<h3 id="快速安装">快速安装</h3>
+<ol>
+<li>在 <a href="https://workers.cloudflare.com/">Cloudflare Worker</a> 管理页面创建一个新的 <strong>Worker</strong> 。</li>
+<li>在Worker编辑页面左边粘贴 <code>index.js</code> 中的代码。</li>
+<li>根据自身需要修改 <code>config</code> 的配置内容</li>
+</ol>
+<h3 id="进阶安装">进阶安装</h3>
+<blockquote>
+<p>如何绑定自己的域名</p>
+</blockquote>
+<ol>
+<li>根据上文快速安装完成，回到域名管理面板</li>
+<li>点击 <code>Workers</code> 进入Workers管理页面</li>
+<li>点击 <code>Add route</code> 设置新的路由</li>
+<li><code>Route</code> 可以输入自己想使用的子域名，如果在根域名上使用直接把当前域名输入即可，<code>Worker</code> 选择上文快速安装好的Worker</li>
+</ol>
+<blockquote>
+<p><code>Route</code> 所使用的域名地址<strong>必须已经解析好A记录</strong>，如果没有能绑定的IP地址，可以输入8.8.8.8占位：）</p>
+</blockquote>
+<h2 id="系统配置">系统配置</h2>
+<p>CF-Worker-Dir允许用户自定义导航页面，配置内容如下：</p>
+<pre><code>const config = {
+  title: &quot;自定义导航&quot;,                 //自定义网站标题
+  subtitle: &quot;Cloudflare Workers Nav&quot;, //自定义网站副标题
+  logo_icon: &quot;sitemap&quot;,               //选择网站logo icon 暂时只支持 (eg:https://semantic-ui.com/elements/icon.html)
+  hitokoto: true,                     //开启 一言 插件
+  search:true,                        //开启 搜索 功能  
+  search_engine:[                     //搜索引擎列表
+    {
+      name:&quot;百度一下&quot;,                   //搜索引擎名称
+      template:&quot;https://www.baidu.com/s?wd=$s&quot;  //搜索引擎模板（含关键词$s）
+    }
+  ],
+  selling_ads: true,                  //是否要开启网址推广
+  sell_info:{
+    domain:&quot;example.com&quot;,             //当前域名
+    price:500,                        //价格
+    mon_unit:&quot;yen sign&quot;,              //货币单位 (eg:https://semantic-ui.com/elements/icon.html#computers)
+    contact:[                         //联系方式
+      {
+        type:&quot;envelope&quot;,              //通讯工具 (&quot;weixin&quot;,&quot;qq&quot;,&quot;telegram plane&quot;,&quot;envelope&quot; or &quot;phone&quot;)
+        content:&quot;info@example.com&quot;    //号码/地址
+      }
+    ]                        
+  },
+  lists: [                            //网址信息
+    {
+      name:&quot;技术&quot;,                    //网址类别
+      icon:&quot;code&quot;,                    //网址类别icon 暂时只支持 (eg:https://semantic-ui.com/elements/icon.html)
+      list:[
+        {
+          url:&quot;https://oschina.net/&quot;, //网站url
+          name:&quot;开源中国&quot;,             //网站名称
+          desc:&quot;领先的中文开源技术社区&quot; //网站描述
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="todo">Todo</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1951928"><label class="task-list-item-label" for="task-item-1951928"> 模块化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1480858"><label class="task-list-item-label" for="task-item-1480858"> 米表列表</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2356268"><label class="task-list-item-label" for="task-item-2356268"> 插件化（倒计时/一言/小工具）</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1093164"><label class="task-list-item-label" for="task-item-1093164"> 国际化</label></li>
+</ul>
+<h2 id="licence">Licence</h2>
+<p>MIT</p>
 ]]></content>
     </entry>
     <entry>
