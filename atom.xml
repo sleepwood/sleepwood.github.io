@@ -2,18 +2,38 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sleepwood.github.io</id>
     <title>技术小栈</title>
-    <updated>2020-02-23T07:47:45.032Z</updated>
+    <updated>2022-04-26T13:53:41.568Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sleepwood.github.io"/>
     <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
     <subtitle>一个先记后看的技术堆栈</subtitle>
     <logo>https://sleepwood.github.io/images/avatar.png</logo>
     <icon>https://sleepwood.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 技术小栈</rights>
+    <rights>All rights reserved 2022, 技术小栈</rights>
+    <entry>
+        <title type="html"><![CDATA[群晖备份Transmission做种列表]]></title>
+        <id>https://sleepwood.github.io/post/qun-hui-bei-fen-transmission-zuo-chong-lie-biao/</id>
+        <link href="https://sleepwood.github.io/post/qun-hui-bei-fen-transmission-zuo-chong-lie-biao/">
+        </link>
+        <updated>2022-04-26T13:02:49.000Z</updated>
+        <content type="html"><![CDATA[<p>创建群晖定时任务，来定期备份做种列表和种子。设置备份文件夹<code>BACKUP_HOME</code>和TR数据文件夹<code>TR_BACKUP_HOME</code></p>
+<pre><code># 设置备份文件夹和transmission数据文件夹
+BACKUP_HOME=/volume1/download/transmission/backups
+TR_BACKUP_HOME=/var/packages/transmission/var
+# 生成备份文件
+cd $TR_BACKUP_HOME
+tar -zcf $BACKUP_HOME/`date +%y%m%d.tar.gz` ./resume ./torrents
+# 保留最新的五个备份文件
+cd $BACKUP_HOME
+ls -t | sed -n '6,$p' | xargs -I {} rm -rf {}
+exit 0
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Git 的常用知识与命令]]></title>
-        <id>https://sleepwood.github.io/post/git</id>
-        <link href="https://sleepwood.github.io/post/git">
+        <id>https://sleepwood.github.io/post/git/</id>
+        <link href="https://sleepwood.github.io/post/git/">
         </link>
         <updated>2020-02-23T05:22:40.000Z</updated>
         <summary type="html"><![CDATA[<p>最近因为疫情的原因，需要在家工作，因此打算布置一个外网Git服务器用于版本控制。目前的计划是通过Docker部署<strong>Gitea</strong>，在部署之前先收集一下日常使用Git时能够用到的语句，记录成笔记的形式，以方便日后工作时查看和温习。</p>
@@ -158,8 +178,8 @@ git push -u origin master
     </entry>
     <entry>
         <title type="html"><![CDATA[CF-Worker-Dir 几秒钟搭建属于自己的导航页]]></title>
-        <id>https://sleepwood.github.io/post/cf-worker-dir</id>
-        <link href="https://sleepwood.github.io/post/cf-worker-dir">
+        <id>https://sleepwood.github.io/post/cf-worker-dir/</id>
+        <link href="https://sleepwood.github.io/post/cf-worker-dir/">
         </link>
         <updated>2020-02-20T07:37:48.000Z</updated>
         <summary type="html"><![CDATA[<p>CF-Worker-Dir是一款适用于Cloudflare Worker平台上的云函数程序，可以使用它在一分钟内搭建属于自己的导航页面。CF-Worker-Dir提供丰富的自定义配置，同时它还可以预留了接口帮助你售出自己域名。如果你的域名还没有搭建网站，不如先利用CF-Worker-Dir让你的域名不再浪费。😉</p>
@@ -234,10 +254,10 @@ git push -u origin master
 </code></pre>
 <h2 id="todo">Todo</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6040028"><label class="task-list-item-label" for="task-item-6040028"> 模块化</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8243766"><label class="task-list-item-label" for="task-item-8243766"> 米表列表</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4867943"><label class="task-list-item-label" for="task-item-4867943"> 插件化（倒计时/一言/小工具）</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3136157"><label class="task-list-item-label" for="task-item-3136157"> 国际化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4968016"><label class="task-list-item-label" for="task-item-4968016"> 模块化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6793700"><label class="task-list-item-label" for="task-item-6793700"> 米表列表</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1173729"><label class="task-list-item-label" for="task-item-1173729"> 插件化（倒计时/一言/小工具）</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9653325"><label class="task-list-item-label" for="task-item-9653325"> 国际化</label></li>
 </ul>
 <h2 id="licence">Licence</h2>
 <p>MIT</p>
@@ -245,8 +265,8 @@ git push -u origin master
     </entry>
     <entry>
         <title type="html"><![CDATA[如何通过配置自定义文件定义H5ai]]></title>
-        <id>https://sleepwood.github.io/post/h5ai-config</id>
-        <link href="https://sleepwood.github.io/post/h5ai-config">
+        <id>https://sleepwood.github.io/post/h5ai-config/</id>
+        <link href="https://sleepwood.github.io/post/h5ai-config/">
         </link>
         <updated>2020-02-10T07:36:17.000Z</updated>
         <summary type="html"><![CDATA[<p>我们在搭建好h5ai程序后，如果对网站的布局、显示方式等不满意，可以通过h5ai提供的丰富的配置文件进行进行个性化定制。配置文件在 <code>_h5ai/private/conf/options.json</code> ，我在官网上并没有找到对配置文件的详细说明，因此在这里把整个文件进行详细说明和翻译，以备不时之需。</p>
@@ -1033,8 +1053,8 @@ git push -u origin master
     </entry>
     <entry>
         <title type="html"><![CDATA[使用H5ai搭建属于自己的目录显示程序]]></title>
-        <id>https://sleepwood.github.io/post/h5ai-install</id>
-        <link href="https://sleepwood.github.io/post/h5ai-install">
+        <id>https://sleepwood.github.io/post/h5ai-install/</id>
+        <link href="https://sleepwood.github.io/post/h5ai-install/">
         </link>
         <updated>2020-02-09T07:44:06.000Z</updated>
         <summary type="html"><![CDATA[<p>有时候我们需要分享文件或者随时使用某些文件时，除了使用百度微软等网盘进行分享外，还可以直接把文件存储到自己的服务器上然后搭建目录显示程序进行分享。市面上目录显示程序很多，本文记录一下如何使用H5ai搭建目录显示程序。</p>
@@ -1099,8 +1119,8 @@ git push -u origin master
     </entry>
     <entry>
         <title type="html"><![CDATA[Nginx 反向代理本机端口]]></title>
-        <id>https://sleepwood.github.io/post/nginx-proxy</id>
-        <link href="https://sleepwood.github.io/post/nginx-proxy">
+        <id>https://sleepwood.github.io/post/nginx-proxy/</id>
+        <link href="https://sleepwood.github.io/post/nginx-proxy/">
         </link>
         <updated>2020-02-04T05:15:08.000Z</updated>
         <summary type="html"><![CDATA[<p>除了部署网站外，有时候我还会部署其他类型的服务，它们总是会使用其他端口。为了方便访问和管理，我们会使用Nginx或者Caddy来反向代理本机端口。本文在此记录一下如何配置Nginx来进行域名反代。如果想使用SSL将相应<code>#</code>号删除即可。</p>
@@ -1165,8 +1185,8 @@ git push -u origin master
     </entry>
     <entry>
         <title type="html"><![CDATA[使用Docker Compose搭建属于自己的Bitwarden服务器]]></title>
-        <id>https://sleepwood.github.io/post/bitwarden-docker</id>
-        <link href="https://sleepwood.github.io/post/bitwarden-docker">
+        <id>https://sleepwood.github.io/post/bitwarden-docker/</id>
+        <link href="https://sleepwood.github.io/post/bitwarden-docker/">
         </link>
         <updated>2020-02-03T11:01:39.000Z</updated>
         <summary type="html"><![CDATA[<p>随着日常接触到越来越多的平台，越发需要一个靠谱的密码管理工具，之前使用过Keepass但是因为它基于文件存储，同步备份都很困难，又不喜欢1password等一众闭源解决方案——把密码放在别人手里还是有点难受。就在这时，Bitwarden走入了我的视野，开源，云同步，自定义，基本上满足了我对密码管理工具的全部要求。在这里记录一下我是如何使用Docker Compose搭建服务器的。</p>
