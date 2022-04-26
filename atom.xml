@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sleepwood.github.io</id>
     <title>技术小栈</title>
-    <updated>2022-04-26T13:53:41.568Z</updated>
+    <updated>2022-04-26T14:02:59.090Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sleepwood.github.io"/>
     <link rel="self" href="https://sleepwood.github.io/atom.xml"/>
@@ -254,10 +254,10 @@ git push -u origin master
 </code></pre>
 <h2 id="todo">Todo</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4968016"><label class="task-list-item-label" for="task-item-4968016"> 模块化</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6793700"><label class="task-list-item-label" for="task-item-6793700"> 米表列表</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1173729"><label class="task-list-item-label" for="task-item-1173729"> 插件化（倒计时/一言/小工具）</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9653325"><label class="task-list-item-label" for="task-item-9653325"> 国际化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9667422"><label class="task-list-item-label" for="task-item-9667422"> 模块化</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8526173"><label class="task-list-item-label" for="task-item-8526173"> 米表列表</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4755629"><label class="task-list-item-label" for="task-item-4755629"> 插件化（倒计时/一言/小工具）</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7380086"><label class="task-list-item-label" for="task-item-7380086"> 国际化</label></li>
 </ul>
 <h2 id="licence">Licence</h2>
 <p>MIT</p>
